@@ -1,0 +1,158 @@
+
+/* General page styling */
+* {
+    box-sizing: border-box;
+}
+
+body {
+    font-family: Arial, sans-serif;
+    background-color: #fbf7fc;
+    color: #44394d;
+    margin: 0;
+    padding: 0;
+    line-height: 1.6;
+}
+
+/* Header */
+header {
+    background-color: #79618f;
+    color: white;
+    padding: 25px;
+    text-align: center;
+}
+
+header h1 {
+    margin: 0 0 15px;
+}
+
+/* Navigation */
+nav {
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 12px;
+}
+
+nav a {
+    color: white;
+    text-decoration: none;
+    padding: 10px 15px;
+    border-radius: 5px;
+}
+
+nav a:hover {
+    background-color: #a18ab4;
+}
+
+/* Main content */
+main {
+    max-width: 1100px;
+    margin: 30px auto;
+    padding: 25px;
+    background-color: white;
+    border-radius: 12px;
+    box-shadow: 0 3px 12px rgba(121, 97, 143, 0.10);
+}
+
+/* Headings */
+h2 {
+    color: #79618f;
+}
+
+h3 {
+    color: #a06f91;
+}
+
+h4 {
+    color: #79618f;
+}
+
+/* Forms */
+form {
+    margin-bottom: 20px;
+}
+
+label {
+    display: inline-block;
+    margin-bottom: 5px;
+    font-weight: bold;
+    color: #59436c;
+}
+
+input,
+select,
+textarea {
+    width: 100%;
+    max-width: 500px;
+    padding: 10px;
+    margin: 5px 0 12px;
+    border: 1px solid #dfd2e7;
+    border-radius: 7px;
+    font-size: 15px;
+    background-color: #fdfaff;
+    color: #44394d;
+}
+
+input:focus,
+select:focus,
+textarea:focus {
+    outline: 2px solid #c9addb;
+    border-color: #a18ab4;
+}
+
+/* Buttons */
+button {
+    background-color: #a06f91;
+    color: white;
+    border: none;
+    padding: 10px 18px;
+    border-radius: 7px;
+    cursor: pointer;
+    font-size: 15px;
+    transition: background-color 0.2s;
+}
+
+button:hover {
+    background-color: #79618f;
+}
+
+/* Links */
+a {
+    color: #79618f;
+}
+
+main a:hover {
+    color: #a06f91;
+}
+
+/* Horizontal lines */
+hr {
+    border: 0;
+    border-top: 1px solid #eadfec;
+    margin: 25px 0;
+}
+
+/* Footer */
+footer {
+    background-color: #79618f;
+    color: white;
+    text-align: center;
+    padding: 15px;
+    margin-top: 30px;
+}
+
+/* Mobile layout */
+@media (max-width: 600px) {
+    main {
+        margin: 15px;
+        padding: 15px;
+    }
+
+    nav {
+        flex-direction: column;
+    }
+
+    nav a {
+        display: block;
+    }
+}

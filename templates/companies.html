@@ -1,0 +1,94 @@
+
+{% extends "base.html" %}
+
+{% block title %}Companies{% endblock %}
+
+{% block content %}
+
+<h2>Companies</h2>
+<p>Manage the companies you are interested in working for.</p>
+
+<h3>Add a New Company</h3>
+
+<form action="/companies/add" method="POST">
+
+    <label for="company_name">Company Name:</label>
+    <input type="text" id="company_name" name="company_name" required>
+    <br><br>
+
+    <label for="industry">Industry:</label>
+    <input type="text" id="industry" name="industry">
+    <br><br>
+
+    <label for="website">Website:</label>
+    <input type="text" id="website" name="website">
+    <br><br>
+
+    <label for="city">City:</label>
+    <input type="text" id="city" name="city">
+    <br><br>
+
+    <label for="state">State:</label>
+    <input type="text" id="state" name="state">
+    <br><br>
+
+    <label for="notes">Notes:</label>
+    <textarea id="notes" name="notes"></textarea>
+    <br><br>
+
+    <input type="submit" value="Add Company">
+
+</form>
+
+<hr>
+
+<h3>Company List</h3>
+
+{% for company in companies %}
+
+    <h4>{{ company['company_name'] }}</h4>
+
+    <form action="/companies/update/{{ company['company_id'] }}" method="POST">
+
+        <label>Company Name:</label>
+        <input type="text" name="company_name"
+               value="{{ company['company_name'] }}" required>
+        <br><br>
+
+        <label>Industry:</label>
+        <input type="text" name="industry"
+               value="{{ company['industry'] or '' }}">
+        <br><br>
+
+        <label>Website:</label>
+        <input type="text" name="website"
+               value="{{ company['website'] or '' }}">
+        <br><br>
+
+        <label>City:</label>
+        <input type="text" name="city"
+               value="{{ company['city'] or '' }}">
+        <br><br>
+
+        <label>State:</label>
+        <input type="text" name="state"
+               value="{{ company['state'] or '' }}">
+        <br><br>
+
+        <label>Notes:</label>
+        <textarea name="notes">{{ company['notes'] or '' }}</textarea>
+        <br><br>
+
+        <button type="submit">Save Changes</button>
+
+    </form>
+
+    <form action="/companies/delete/{{ company['company_id'] }}" method="POST">
+        <button type="submit">Delete Company</button>
+    </form>
+
+    <hr>
+
+{% endfor %}
+
+{% endblock %}

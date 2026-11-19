@@ -1,0 +1,23 @@
+
+{% extends "base.html" %}
+
+{% block title %}Dashboard{% endblock %}
+
+{% block content %}
+
+<h2>Job Tracker Dashboard</h2>
+
+<p>Welcome to the Job Tracker Dashboard! Here you can view your job applications and their statuses.</p>
+
+<h3>Statistics</h3>
+
+<p>Total Applications: {{ stats['applications'] }}</p>
+<p>Total Companies: {{ stats['companies'] }}</p>
+<p>Total Jobs: {{ stats['jobs'] }}</p>
+<p>Total Contacts: {{ stats['contacts'] }}</p>
+
+<button onclick="window.location.href='/applications'">
+    Manage Applications
+</button>
+
+{% endblock %}

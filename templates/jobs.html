@@ -1,0 +1,136 @@
+
+{% extends "base.html" %}
+
+{% block title %}Jobs{% endblock %}
+
+{% block content %}
+
+<h2>Jobs</h2>
+<p>View and manage available job opportunities.</p>
+
+<h3>Add a New Job</h3>
+
+<form action="/jobs/add" method="POST">
+
+    <label>Company:</label>
+    <select name="company_id" required>
+        {% for company in companies %}
+            <option value="{{ company['company_id'] }}">
+                {{ company['company_name'] }}
+            </option>
+        {% endfor %}
+    </select>
+    <br><br>
+
+    <label>Job Title:</label>
+    <input type="text" name="job_title" required>
+    <br><br>
+
+    <label>Job Type:</label>
+    <select name="job_type" required>
+        <option value="Full-time">Full-time</option>
+        <option value="Part-time">Part-time</option>
+        <option value="Contract">Contract</option>
+        <option value="Internship">Internship</option>
+    </select>
+    <br><br>
+
+    <label>Minimum Salary:</label>
+    <input type="number" name="salary_min">
+    <br><br>
+
+    <label>Maximum Salary:</label>
+    <input type="number" name="salary_max">
+    <br><br>
+
+    <label>Job URL:</label>
+    <input type="text" name="job_url">
+    <br><br>
+
+    <label>Date Posted:</label>
+    <input type="date" name="date_posted">
+    <br><br>
+
+    <label>Requirements (JSON):</label>
+    <textarea name="requirements"
+              placeholder='["Python", "SQL", "Flask"]'></textarea>
+    <br><br>
+
+    <button type="submit">Add Job</button>
+
+</form>
+
+<hr>
+
+<h3>Job List</h3>
+
+{% for job in jobs %}
+
+    <h4>{{ job['job_title'] }}</h4>
+
+    <form action="/jobs/update/{{ job['job_id'] }}" method="POST">
+
+        <label>Company:</label>
+        <select name="company_id" required>
+            {% for company in companies %}
+                <option value="{{ company['company_id'] }}"
+                    {% if company['company_id'] == job['company_id'] %}selected{% endif %}>
+                    {{ company['company_name'] }}
+                </option>
+            {% endfor %}
+        </select>
+        <br><br>
+
+        <label>Job Title:</label>
+        <input type="text" name="job_title"
+               value="{{ job['job_title'] }}" required>
+        <br><br>
+
+        <label>Job Type:</label>
+        <select name="job_type" required>
+            {% for type in ['Full-time', 'Part-time', 'Contract', 'Internship'] %}
+                <option value="{{ type }}"
+                    {% if type == job['job_type'] %}selected{% endif %}>
+                    {{ type }}
+                </option>
+            {% endfor %}
+        </select>
+        <br><br>
+
+        <label>Minimum Salary:</label>
+        <input type="number" name="salary_min"
+               value="{{ job['salary_min'] or '' }}">
+        <br><br>
+
+        <label>Maximum Salary:</label>
+        <input type="number" name="salary_max"
+               value="{{ job['salary_max'] or '' }}">
+        <br><br>
+
+        <label>Job URL:</label>
+        <input type="text" name="job_url"
+               value="{{ job['job_url'] or '' }}">
+        <br><br>
+
+        <label>Date Posted:</label>
+        <input type="date" name="date_posted"
+               value="{{ job['date_posted'].strftime('%Y-%m-%d') if job['date_posted'] else '' }}">
+        <br><br>
+
+        <label>Requirements (JSON):</label>
+        <textarea name="requirements">{{ job['requirements_text'] }}</textarea>
+        <br><br>
+
+        <button type="submit">Save Changes</button>
+
+    </form>
+
+    <form action="/jobs/delete/{{ job['job_id'] }}" method="POST">
+        <button type="submit">Delete Job</button>
+    </form>
+
+    <hr>
+
+{% endfor %}
+
+{% endblock %}

@@ -1,0 +1,80 @@
+
+{% extends "base.html" %}
+
+{% block title %}Job Match{% endblock %}
+
+{% block content %}
+
+<h2>Job Match</h2>
+
+<p>
+    Enter your skills to find jobs that best match your qualifications.
+</p>
+
+<hr>
+
+<h3>Enter Your Skills</h3>
+
+<form action="/job-match" method="POST">
+
+    <label>Your Skills (separate with commas):</label>
+    <br><br>
+
+    <textarea name="skills"
+              rows="4"
+              cols="50"
+              placeholder="Example: Python, SQL, Excel, Flask"
+              required>{{ user_skills }}</textarea>
+
+    <br><br>
+
+    <button type="submit">Find Matching Jobs</button>
+
+</form>
+
+<hr>
+
+{% if matched_jobs %}
+
+    <h3>Job Match Results</h3>
+
+    {% for job in matched_jobs %}
+
+        <h4>{{ job['job_title'] }}</h4>
+
+        <p>Company: {{ job['company_name'] }}</p>
+
+        <p>
+            Match Percentage:
+            <strong>{{ job['match_percentage'] }}%</strong>
+        </p>
+
+        <p>
+            Matched Skills:
+            {% if job['matched_skills'] %}
+                {{ job['matched_skills'] | join(', ') }}
+            {% else %}
+                None
+            {% endif %}
+        </p>
+
+        <p>
+            Missing Skills:
+            {% if job['missing_skills'] %}
+                {{ job['missing_skills'] | join(', ') }}
+            {% else %}
+                None
+            {% endif %}
+        </p>
+
+        <hr>
+
+    {% endfor %}
+
+{% elif user_skills %}
+
+    <p>No matching jobs found. Check your skills or job requirements.</p>
+
+{% endif %}
+
+{% endblock %}

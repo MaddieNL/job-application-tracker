@@ -1,0 +1,131 @@
+
+{% extends "base.html" %}
+
+{% block title %}Contacts{% endblock %}
+
+{% block content %}
+
+<h2>Contacts</h2>
+<p>Track and manage your professional contacts.</p>
+
+<hr>
+
+<h3>Add a New Contact</h3>
+
+<form action="/contacts/add" method="POST">
+
+    <label>Company:</label>
+    <select name="company_id" required>
+        <option value="">Select a Company</option>
+        {% for company in companies %}
+            <option value="{{ company['company_id'] }}">
+                {{ company['company_name'] }}
+            </option>
+        {% endfor %}
+    </select>
+    <br><br>
+
+    <label>Contact Name:</label>
+    <input type="text" name="contact_name" required>
+    <br><br>
+
+    <label>Title:</label>
+    <input type="text" name="title">
+    <br><br>
+
+    <label>Email:</label>
+    <input type="email" name="email">
+    <br><br>
+
+    <label>Phone:</label>
+    <input type="text" name="phone">
+    <br><br>
+
+    <label>LinkedIn URL:</label>
+    <input type="url" name="linkedin_url">
+    <br><br>
+
+    <label>Notes:</label>
+    <textarea name="notes"></textarea>
+    <br><br>
+
+    <button type="submit">Add Contact</button>
+
+</form>
+
+<hr>
+
+<h3>Existing Contacts</h3>
+
+{% for contact in contacts %}
+
+    <h4>{{ contact['contact_name'] }}</h4>
+
+    <p>Company: {{ contact['company_name'] }}</p>
+
+    <form action="/contacts/update/{{ contact['contact_id'] }}"
+          method="POST">
+
+        <label>Company:</label>
+        <select name="company_id" required>
+            {% for company in companies %}
+                <option value="{{ company['company_id'] }}"
+                    {% if company['company_id'] == contact['company_id'] %}
+                        selected
+                    {% endif %}>
+                    {{ company['company_name'] }}
+                </option>
+            {% endfor %}
+        </select>
+        <br><br>
+
+        <label>Contact Name:</label>
+        <input type="text" name="contact_name"
+               value="{{ contact['contact_name'] }}" required>
+        <br><br>
+
+        <label>Title:</label>
+        <input type="text" name="title"
+               value="{{ contact['title'] or '' }}">
+        <br><br>
+
+        <label>Email:</label>
+        <input type="email" name="email"
+               value="{{ contact['email'] or '' }}">
+        <br><br>
+
+        <label>Phone:</label>
+        <input type="text" name="phone"
+               value="{{ contact['phone'] or '' }}">
+        <br><br>
+
+        <label>LinkedIn URL:</label>
+        <input type="url" name="linkedin_url"
+               value="{{ contact['linkedin_url'] or '' }}">
+        <br><br>
+
+        <label>Notes:</label>
+        <textarea name="notes">{{ contact['notes'] or '' }}</textarea>
+        <br><br>
+
+        <button type="submit">Save Changes</button>
+
+    </form>
+
+    <form action="/contacts/delete/{{ contact['contact_id'] }}"
+          method="POST"
+          onsubmit="return confirm('Delete this contact?');">
+
+        <button type="submit">Delete Contact</button>
+
+    </form>
+
+    <hr>
+
+{% else %}
+
+    <p>No contacts have been added yet.</p>
+
+{% endfor %}
+
+{% endblock %}
